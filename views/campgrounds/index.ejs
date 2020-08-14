@@ -24,7 +24,9 @@
         <div class="col-md-3 col-sm-6">
             <div class="card mb-3">
                 <img class="card-img-top" src="<%= camp.image %>" />
-                <div class="card-body text-center">
+                <div
+                    class="card-body text-center d-flex flex-column justify-content-between"
+                >
                     <h5 class="card-title"><%= camp.name %></h5>
                     <div class="rating py-2">
                         <% if (camp.rating === 0) { %>

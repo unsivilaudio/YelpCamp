@@ -1,3 +1,7 @@
 body {
-	background-color: #f7f7f7;
+    background-color: #f7f7f7;
+}
+
+.yellow-star {
+    color: rgb(245, 223, 29);
 }

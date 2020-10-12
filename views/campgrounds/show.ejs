@@ -28,6 +28,72 @@
 					</div>
 				</div>
 			</div>
+
+			
+            <!--Review section-->
+
+                <div class="card p-3 mb-4 text-center">
+					<div class="overall-rating mb-3">
+					<% if (camp.rating === 0) { %>
+						<h5>
+							<em>No reviews yet.</em>
+						</h5>
+						<% } else { %>
+							<p>
+								<span class="fa fa-star yellow-star"></span>
+								<span class="fa fa-star<% if (camp.rating < 1.5) { %>-o <% } else { %> yellow-star<% } %>"></span>
+								<span class="fa fa-star<% if (camp.rating < 2.5) { %>-o <% } else { %> yellow-star<% } %>"></span>
+								<span class="fa fa-star<% if (camp.rating < 3.5) { %>-o <% } else { %> yellow-star<% } %>"></span>
+								<span class="fa fa-star<% if (camp.rating < 4.5) { %>-o <% } else { %> yellow-star<% } %>"></span>
+								<em>(total reviews: <%= camp.reviews.length %>)</em>
+							</p>
+							<p>
+								Current campground rating: <strong><%= camp.rating.toFixed(2) %></strong>
+							</p>
+							<p><h4>Latest reviews for this campground:</h4></p>
+							<hr style="margin-top: 0;">
+							<% camp.reviews.slice(0, 5).forEach(review => { %>
+								<div class="row">
+									<div class="col-md-3">
+										<% for(let i = 0; i < review.rating; i++) { %>
+											<span class="fa fa-star"></span>
+										<% } %>
+										<div>Review by: <strong><%= review.author.username %></strong></div>
+										<span><em><%= review.updatedAt.toDateString() %></em></span>
+									</div>
+									<div class="col-md-9 d-flex align-items-center justify-content-between">
+										<blockquote class="blockquote font-italic">
+											<p>
+												<%= review.text %>
+											</p>
+										</blockquote>
+										<% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+										<div class="row d-flex align-flex-end">
+											<a class="btn btn-sm btn-warning ml-auto"
+											href="/campgrounds/<%=camp._id %>/reviews/<%=review._id %>/edit">Edit</a>
+											<form id="delete-form" action="/campgrounds/<%=camp._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+												<input type="submit" class="btn btn-sm btn-danger mx-3" value="Delete">
+											</form>
+										</div>
+										<% } %>
+									</div>
+								</div>
+								<hr>
+								<% }); %>
+								<div style="margin-bottom: 10px;">
+									<h4><a href="/campgrounds/<%= camp._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> See all reviews</a></h4>
+								</div>
+								<% } %>
+								</div>
+                    	<div>
+                        <a class="btn btn-primary btn-lg <% if (currentUser && camp.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/campgrounds/<%= camp._id %>/reviews/new">
+							Write a New Review
+						</a>
+                    </div>
+                </div>
+
+
+
 			<div class="card bg-light p-3 mb-4">
 				<a class="btn btn-success my-3 align-self-end" href="/campgrounds/<%= camp._id %>/comments/new">Leave a Comment</a>
 				<% camp.comments.forEach(comment => { %>

@@ -6,10 +6,6 @@ body {
     color: rgb(245, 223, 29);
 }
 
-.card {
-    height: 100%;
-}
-
 h5.card-title {
     flex: 1;
 }
